@@ -14,6 +14,10 @@ router.get('/api/extension/cowiplan_filter/:db', function (req, response) {
     var uuid = req.query.uuid;
     var db = req.params.db;
 
+    if (db.split("@").length > 1) {
+        db = db.split("@")[1];
+    }
+
 
     var call = config.gc2.host + "/api/v2/preparedstatement/" + db + "/?params=" + params + "&uuid=" + uuid + "&srs=25832";
 
@@ -53,7 +57,7 @@ router.get('/api/extension/cowiplan_filter/:db', function (req, response) {
                     }
                 }));
 
-                var call2 = "http://127.0.0.1:3000/api/static/" + db + "/feature/?filter=" + buff.toString('base64') + "&width=600&height=600";
+                var call2 = "http://127.0.0.1:3000/api/static/" + db + "/_cowiplan/?filter=" + buff.toString('base64') + "&width=600&height=600";
                 var options = {
                     method: 'GET',
                     uri: call2
