@@ -12,7 +12,19 @@ var config = require('../../../config/config.js');
 router.get('/api/extension/cowiplan_filter/:db', function (req, response) {
     var params = req.query.params;
     var uuid = req.query.uuid;
+    var width = req.query.width;
+    var height = req.query.height;
     var db = req.params.db;
+    var dim;
+
+    if (typeof width !== "undefined" && typeof height !== "undefined") {
+        dim = `&width=${width}&height=${height}`
+    } else {
+        dim = `&width=991&height=600`
+    }
+
+    console.log(dim);
+
 
     if (db.split("@").length > 1) {
         db = db.split("@")[1];
@@ -57,7 +69,7 @@ router.get('/api/extension/cowiplan_filter/:db', function (req, response) {
                     }
                 }));
 
-                var call2 = "http://127.0.0.1:3000/api/static/" + db + "/_cowiplan/?filter=" + buff.toString('base64') + "&width=600&height=600";
+                var call2 = "http://127.0.0.1:3000/api/static/" + db + "/_cowiplan/?filter=" + buff.toString('base64') + dim;
                 var options = {
                     method: 'GET',
                     uri: call2
