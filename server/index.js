@@ -54,8 +54,7 @@ router.get('/api/extension/cowiplan_filter/:db', function (req, response) {
             var json = JSON.parse(body);
 
             if (json.features.length > 0 && typeof json.features[0].properties !== "undefined" && typeof json.features[0].properties.planid !== "undefined") {
-                console.log(json.auth_check.checked_relations[0]);
-                let buff = new Buffer(JSON.stringify({
+                let buff = new Buffer.from(JSON.stringify({
                     [json.auth_check.checked_relations[0]]: {
                         "match": "any",
                         "columns": [
